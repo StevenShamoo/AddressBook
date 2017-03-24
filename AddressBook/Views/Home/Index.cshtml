@@ -1,0 +1,375 @@
+﻿<div class="card">
+    <form class="form-horizontal" id="address-form" role="form">
+        <div class="card-header">
+            <h1>Address Form</h1>
+            <p>Fill in the form below and hit submit to add new addresses.</p>
+        </div>
+        <div class="card-body card-padding">
+            <div class="address">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="fg-line">
+                                <input type="text" class="input-lg form-control fg-input" id="name" name="name">
+                                <label class="fg-label">Name</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="fg-line">
+                                <input type="text" class="input-lg form-control fg-input" id="street" name="street">
+                                <label class="fg-label">Street</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="fg-line">
+                                <input type="text" class="input-lg form-control fg-input" id="city" name="city">
+                                <label class="fg-label">City</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="fg-line">
+                                <input type="text" class="input-lg form-control fg-input" id="street2" name="street2">
+                                <label class="fg-label">Street 2</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="fg-line">
+                                <input type="text" class="input-lg form-control fg-input" id="state" name="state">
+                                <label class="fg-label">State</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="fg-line">
+                                <input type="text" class="input-lg form-control fg-input" id="postalCode" name="postalCode">
+                                <label class="fg-label">Postal Code</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <a href="" type="submit" class="btn pull-left btn-primary addAddress" id="submitButton">Submit New Address</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="card" style="padding-top: 50px">
+    <div class="card-header">
+        <h2>Your Addresses</h2>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped address-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Street</th>
+                    <th>Street2</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>PostalCode</th>
+                    <th>DateAdded</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody id="addressBegin"></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="editAddressModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModalTimes"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title">Edit Address Info</h3>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <h4>Change Address Info Below</h4>
+                    <form id="editInfoForm">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" class="form-control" id="nameModal" placeholder="Name" name="name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="street">Street:</label>
+                            <input class="form-control" id="streetModal" placeholder="Street" name="street" />
+                        </div>
+                        <div class="form-group">
+                            <label for="street2">Street2:</label>
+                            <input class="form-control" id="street2Modal" placeholder="street2" name="street2" />
+                        </div>
+                        <div class="form-group">
+                            <label for="city">City:</label>
+                            <input class="form-control" id="cityModal" placeholder="City" name="city" />
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State:</label>
+                            <input class="form-control" id="stateModal" placeholder="State" name="state" />
+                        </div>
+                        <div class="form-group">
+                            <label for="postalCode">PostalCode:</label>
+                            <input class="form-control" id="postalCodeModal" placeholder="PostalCode" name="postalCode" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="closeModalButton">Cancel</button>
+                <button class="submitUpdateButton btn btn-primary">Submit Changes</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script id="addressTemplate" type="text/template">
+    <tr class="addressPosting">
+        <td class="name"></td>
+        <td class="street"></td>
+        <td class="street2"></td>
+        <td class="city"></td>
+        <td class="state"></td>
+        <td class="postalCode"></td>
+        <td class="dateAdded"></td>
+
+        <td class="edit"><button class="editClick btn btn-default">Edit</button></td>
+        <td class="delete"><button class="deleteButton btn btn-danger">Delete</button></td>
+    </tr>
+</script>
+
+@section Scripts {
+
+    <script src="~/Scripts/addressBook.js"></script>
+
+    <script src="~/Assets/Services/addressBook.services.address.js"></script>
+
+    <script type="text/javascript">
+        console.log(addressBook.services.address);
+        
+        //document.ready, start up function
+        addressBook.page.startUp = function () {
+            console.log("I fired");
+            //Simulated Grab of userId from a login cookie
+            addressBook.page.userId = 55;
+            //Gets all by desc date added
+            addressBook.services.address.getAll(addressBook.page.userId, addressBook.page.onGetAllSuccess, addressBook.page.OnGetAllError);
+            //Click Handlers
+            $("#submitButton").on('click', addressBook.page.handlers.onSubmitAddress);
+            $(".editClick").on('click', addressBook.page.handlers.onEditAddress);
+            $(".deleteButton").on('click', addressBook.page.handlers.onDeleteAddress);
+            $(".submitUpdateButton").on("click", addressBook.page.handlers.onUpdateAddress);
+        }
+
+       
+        //Submit an Address
+        addressBook.page.handlers.onSubmitAddress = function () {
+            event.preventDefault();
+
+            var payload = {
+                name: $("#name").val(),
+                street: $("#street").val(),
+                street2: $("#street2").val(),
+                city: $("#city").val(),
+                state: $("#state").val(),
+                postalCode: $("#postalCode").val()
+            }
+            payload.userId = addressBook.page.userId;
+
+            $("#name").val("");
+            $("#street").val("");
+            $("#street2").val("");
+            $("#city").val("");
+            $("#state").val("");
+            $("#postalCode").val("");
+
+            addressBook.services.address.insert(payload, addressBook.page.onInsertSuccess, addressBook.page.onInsertError);
+        }
+
+        //Delete
+        addressBook.page.handlers.onDeleteAddress = function () {
+            event.preventDefault();
+
+            var Ids = {};
+
+            Ids.addressId = $(this).attr("id");
+            Ids.userId = $(this).attr("data-user");
+
+            addressBook.services.address.delete(Ids, addressBook.page.deleteSuccess, addressBook.page.deleteError);
+        }
+        //Update click
+        addressBook.page.handlers.onEditAddress = function () {
+            event.preventDefault();
+            var Ids = {};
+
+            Ids.addressId = $(this).attr("id");
+            Ids.userId = $(this).attr("data-user");
+            console.log(Ids);
+
+            addressBook.services.address.getById(Ids, addressBook.page.getByIdSuccess, addressBook.page.getByIdError);
+
+        }
+
+        //Edit mode, gets one
+        addressBook.page.getByIdSuccess = function (data) {
+            console.log("getbyID", data);
+
+            $("#nameModal").val(data.Item.Name);
+            $("#streetModal").val(data.Item.Street);
+            $("#street2Modal").val(data.Item.Street2);
+            $("#cityModal").val(data.Item.City);
+            $("#stateModal").val(data.Item.State);
+            $("#postalCodeModal").val(data.Item.PostalCode);
+
+            $(".submitUpdateButton").attr("id", data.Item.Id);
+            $(".submitUpdateButton").attr("data-user", data.Item.UserId);
+
+
+
+            $('#editAddressModal').modal('show');
+        }
+
+
+        //Update
+        addressBook.page.handlers.onUpdateAddress = function () {
+            event.preventDefault();
+
+            var payload = {
+                name: $("#nameModal").val(),
+                street: $("#streetModal").val(),
+                street2: $("#street2Modal").val(),
+                city: $("#cityModal").val(),
+                state: $("#stateModal").val(),
+                postalCode: $("#postalCodeModal").val()
+            }
+            console.log("clicked submit update", $(".submitUpdateButton").attr("id"));
+            payload.userId = $(".submitUpdateButton").attr("data-user");
+            payload.id = $(".submitUpdateButton").attr("id");
+
+            $("#name").val("");
+            $("#street").val("");
+            $("#street2").val("");
+            $("#city").val("");
+            $("#state").val("");
+            $("#postalCode").val("");
+
+
+            addressBook.services.address.update(payload, addressBook.page.updateSuccess, addressBook.page.updateError);
+        }
+
+        //Delete
+        addressBook.page.handlers.onDeleteAddress = function () {
+            var Ids = {};
+
+            Ids.addressId = $(this).attr("id");
+            Ids.userId = $(this).attr("data-user");
+
+            addressBook.services.address.delete(Ids, addressBook.page.deleteSuccess, addressBook.page.deleteError);
+        }
+
+        
+        ////Success/Error handlers////
+
+
+        //Insert
+        addressBook.page.onInsertSuccess = function () {
+            //var userId = 55;
+            console.log("Insert was successful!");
+            addressBook.services.address.getAll(addressBook.page.userId, addressBook.page.onGetAllSuccess, addressBook.page.OnGetAllError);
+        }
+
+        //Get List
+        addressBook.page.onGetAllSuccess = function (data) {
+            console.log('Get All Success');
+            console.log(data);
+            $("#addressBegin").empty();
+
+            for (var i = 0; i < data.Items.length; i++) {
+                var addressForm = $($("#addressTemplate").html());
+
+                var dateTime = data.Items[i].CreationDateTime;
+                var dateTimeTruncated = dateTime.slice(0, dateTime.indexOf("T"));
+
+                addressForm.find('.name').text(data.Items[i].Name);
+                addressForm.find('.street').text(data.Items[i].Street);
+                addressForm.find('.street2').text(data.Items[i].Street2)
+                addressForm.find('.city').text(data.Items[i].City);
+                addressForm.find('.state').text(data.Items[i].State);
+                addressForm.find('.postalCode').text(data.Items[i].PostalCode);
+                addressForm.find('.dateAdded').text(dateTimeTruncated);
+                addressForm.find('.editClick').attr('id', data.Items[i].Id);
+                addressForm.find('.editClick').attr('data-user', data.Items[i].UserId);
+                addressForm.find('.deleteButton').attr('id', data.Items[i].Id);
+                addressForm.find('.deleteButton').attr('data-user', data.Items[i].UserId);
+
+                $("#addressBegin").append(addressForm);
+            }
+            $(".editClick").on('click', addressBook.page.handlers.onEditAddress);
+            $(".deleteButton").on('click', addressBook.page.handlers.onDeleteAddress);
+        }
+
+        //Delete
+        addressBook.page.deleteSuccess = function () {
+            //var userId = 55;
+            addressBook.services.address.getAll(addressBook.page.userId, addressBook.page.onGetAllSuccess, addressBook.page.OnGetAllError);
+            console.log("Delete Successful!");
+        }
+
+        //Update
+        addressBook.page.updateSuccess = function () {
+            //var userId = 55;
+            addressBook.services.address.getAll(addressBook.page.userId, addressBook.page.onGetAllSuccess, addressBook.page.OnGetAllError);
+            $('#editAddressModal').modal('hide');
+            console.log("Update was successful!");
+        }
+        
+        addressBook.page.onInsertError = function () {
+            console.log("Insert Error!");
+
+        }
+
+        addressBook.page.OnGetAllError = function () {
+            console.log("Get All Error!");
+        }
+
+        addressBook.page.getByIdError = function () {
+            console.log("Error while getting by Id");
+        }
+
+        
+        addressBook.page.deleteError = function () {
+            console.log("Error while trying to delete!");
+        }
+
+        addressBook.page.updateError = function () {
+            console.log("Update Error!");
+        }
+
+
+    </script>
+
+
+
+
+}
